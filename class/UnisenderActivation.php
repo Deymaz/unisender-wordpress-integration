@@ -8,7 +8,7 @@ class UnisenderActivation extends UnisenderAbstract
         if (!empty($_POST['action']) && strpos($_POST['action'], 'unisender_') === false) {
             return;
         }
-		if (!get_option('unisender_api_key') || !get_option('unisender_login')) {
+		if (!get_option('unisender_api_key')) {
 			add_management_page(
 				'Unisender Integration',
 				'Unisender',
@@ -80,18 +80,16 @@ class UnisenderActivation extends UnisenderAbstract
 
 	public function actionLogin()
 	{
-		if (empty($_POST['api_key']) || empty($_POST['login'])) {
+		if (empty($_POST['api_key'])) {
 			die(self::setResponse(false, __('Not all required fields are filled', $this->textdomain)));
 		}
 
 		$apiKey = $_POST['api_key'];
-		$login  = $_POST['login'];
 
-		$api    = UnisenderApi::getInstance($apiKey, $login);
+		$api    = UnisenderApi::getInstance($apiKey);
 		$result = $api->getUserInfo();
 		if ($result['status'] === 'success') {
 			update_option('unisender_api_key', $apiKey);
-			update_option('unisender_login', $login);
 
 			UnisenderContactList::actionSync(1);
 			die(self::setResponse(true, __('Authorization successful', $this->textdomain), admin_url('tools.php?page=unisender')));

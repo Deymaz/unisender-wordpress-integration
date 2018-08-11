@@ -11,33 +11,29 @@ class UnisenderApi
 	static protected $instance;
 
 	private $apiKey;
-	private $login;
 
-	protected function __construct($apiKey, $login)
+	protected function __construct($apiKey)
 	{
 		$this->apiKey = $apiKey;
-		$this->login = $login;
 	}
 
 	/**
 	 * @param mixed $apiKey
-	 * @param mixed $login
 	 *
 	 * @return null|UnisenderApi
 	 */
-	public static function getInstance($apiKey = null, $login = null)
+	public static function getInstance($apiKey = null)
 	{
 		if (self::$instance === null) {
-			if (!$apiKey && !$login) {
+			if (!$apiKey) {
 				$apiKey = get_option('unisender_api_key');
-				$login  = get_option('unisender_login');
 			}
 
-			if ($apiKey === null || $login === null) {
+			if ($apiKey === null) {
 				return null;
 			}
 
-			self::$instance = new self($apiKey, $login);
+			self::$instance = new self($apiKey);
 		}
 
 		return self::$instance;
@@ -137,7 +133,6 @@ class UnisenderApi
 	{
 		$method = 'getUserInfo';
 		$params['api_key'] = $this->apiKey;
-		$params['login'] = $this->login;
 
 		$response = self::exec($method, $params);
 

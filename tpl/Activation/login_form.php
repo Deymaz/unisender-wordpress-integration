@@ -4,15 +4,6 @@
 	<table class="form-table">
 		<tr class="form-field">
 			<th scope="row">
-				<span class="description">*</span> <label for="login"><?php _e('Login', $this->textdomain); ?></label>
-			</th>
-			<td>
-				<input name="login" type="text" id="login" value="" aria-required="true"
-				       placeholder="<?php _e('Login', $this->textdomain)?>" required>
-			</td>
-		</tr>
-		<tr class="form-field">
-			<th scope="row">
 				<span class="description">*</span> <label for="api_key"><?php _e('API Key', $this->textdomain); ?></label>
 			</th>
 			<td>
